@@ -1,0 +1,60 @@
+<!-- FILM -->
+
+<film width="80" height="60" />
+
+<!-- CAMERA -->
+
+<camera type="perspective" fov="25" />
+<!-- <camera type="perspective" fov="25" aperturesize="0.125" focaldistance="9.5" /> -->
+<!-- <camera type="orthographic" /> -->
+
+<!-- SHADERS -->
+
+<shader name="green">
+	<diffuse_bsdf name="diffuse" color="0.5 0.7 0.5" />
+	<connect from="diffuse bsdf" to="output surface" />
+</shader>
+
+<shader name="horn">
+	<diffuse_bsdf name="diffuse" color="0.95 0.95 0.95" />
+	<connect from="diffuse bsdf" to="output surface" />
+</shader>
+
+<shader name="orange">
+	<diffuse_bsdf name="diffuse" color="0.9 0.5 0.0" />
+	<connect from="diffuse bsdf" to="output surface" />
+</shader>
+
+<shader name="floor">
+	<glossy_bsdf name="glossy" color="0.8 0.8 0.8" roughness="0.1" />
+	<connect from="glossy bsdf" to="output surface" />
+</shader>
+
+<!-- MESHES -->
+
+<transform matrix="0.995037 -0.0240204 -0.0965609 0 -0.0995037 -0.240204 -0.965609 0 3.56147e-10 0.970425 -0.241402 0 0 0 0 1" translate="-1 -10 -3.0">
+
+	<transform translate="1 1 0" scale="0.1 0.1 0.1"  rotate="-100 0 0 1">
+		<state shader="green">
+			<include src="gumbo.xml" />
+		</state>
+	</transform>
+
+	<transform translate="-2.4 2 0" scale="0.1 0.1 0.1" rotate="-50 0 0 1">
+		<state shader="orange">
+			<include src="gumbo.xml" />
+		</state>
+	</transform>
+
+	<transform translate="0 0 -0.4" rotate="20 0 0 1" scale="-2.5 2.5 0.2">
+		<state shader="floor">
+			<patch type="bilinear" P="-1 1 0  1 1 0  -1 -1 0  1 -1 0" />
+			<patch type="bilinear" P="-1 -1 2  1 -1 2  -1 1 2  1 1 2" />
+			<patch type="bilinear" P="-1 -1 0  1 -1 0   -1 -1 2  1 -1 2" />
+			<patch type="bilinear" P="-1 1 2  1 1 2  -1 1 0  1 1 0 " />
+			<patch type="bilinear" P="-1 -1 2  -1 1 2  -1 -1 0  -1 1 0 " />
+			<patch type="bilinear" P="1 -1 0  1 1 0  1 -1 2  1 1 2" />
+		</state>
+	</transform>
+
+</transform>
