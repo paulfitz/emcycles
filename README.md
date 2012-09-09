@@ -42,11 +42,11 @@ Note the "emconfigure" in there, that switches everything over to
 a different compiler.  The resulting code is unrunnable, but 
 can be converted to javascript as follows:
 
-   `cp bin/cycles_test cycles_test.bc && emcc --embed-file elephant.xml --embed-file gumbo.xml cycles_test.bc -o cycles_test.js`
+    cp bin/cycles_test cycles_test.bc && emcc --embed-file elephant.xml --embed-file gumbo.xml cycles_test.bc -o cycles_test.js
 
 or to create a test html page:
 
-   `cp bin/cycles_test cycles_test.bc && emcc --embed-file elephant.xml --embed-file gumbo.xml cycles_test.bc -o cycles_test.html`
+    cp bin/cycles_test cycles_test.bc && emcc --embed-file elephant.xml --embed-file gumbo.xml cycles_test.bc -o cycles_test.html
 
 You'll need patience :-).  You'll then need to fiddle with emcc's
 various flags to get a good optimized result.  The .html needs to be
