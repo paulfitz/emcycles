@@ -75,7 +75,7 @@ public:
 		buffers.push_back(buffer);
 	}
 
-	void add(void *data, size_t size)
+	void add(const void *data, size_t size)
 	{
 		if(size) {
 			CacheBuffer buffer(data, size);
@@ -83,13 +83,13 @@ public:
 		}
 	}
 
-	void add(int& data)
+	void add(const int& data)
 	{
 		CacheBuffer buffer(&data, sizeof(int));
 		buffers.push_back(buffer);
 	}
 
-	void add(float& data)
+	void add(const float& data)
 	{
 		CacheBuffer buffer(&data, sizeof(float));
 		buffers.push_back(buffer);

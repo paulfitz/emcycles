@@ -7,11 +7,11 @@ set(SRC
   cycles_test.cpp
   ../cycles_hack/app/cycles_xml.cpp
   ../cycles_hack/app/cycles_xml.h
-  replacements/util/util_view.cpp
-  replacements/util/util_path.cpp
-  replacements/util/util_cache.cpp
-  replacements/util/util_string.cpp
-  replacements/render/sobol.cpp
+#  replacements/util/util_view.cpp
+#  replacements/util/util_path.cpp
+#  replacements/util/util_cache.cpp
+#  replacements/util/util_string.cpp
+#  replacements/render/sobol.cpp
   pugixml.cpp
   )
 add_executable(cycles_test ${SRC})

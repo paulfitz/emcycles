@@ -173,8 +173,6 @@ public:
 	SHADER_NODE_BASE_CLASS(ProxyNode)
 
 	ShaderSocketType from, to;
-
-	virtual bool is_proxy() const { return true; }
 };
 
 class BsdfNode : public ShaderNode {

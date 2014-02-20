@@ -23,6 +23,7 @@
 
 // use C++11
 #define foreach(x,y) for(x : y)
+#define foreach3(x,y,z) for(x, y : z)
 
 // Cycles depends implicitly on these
 #include <string.h>

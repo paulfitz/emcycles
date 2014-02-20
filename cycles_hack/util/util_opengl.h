@@ -16,19 +16,18 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#ifndef __UTIL_ARGS_H__
-#define __UTIL_ARGS_H__
+#ifndef __UTIL_OPENGL_H__
+#define __UTIL_OPENGL_H__
 
-/* Argument Parsing for command line, we use the OpenImageIO
- * library because it has nice functions to do this. */
+/* OpenGL header includes, used everywhere we use OpenGL, to deal with
+ * platform differences in one central place. */
 
-//#include <OpenImageIO/argparse.h>
+#ifdef __APPLE__
+#include <OpenGL/gl.h>
+#include <OpenGL/glu.h>
+#else
+#include <GL/glew.h>
+#endif
 
-CCL_NAMESPACE_BEGIN
-
-//OIIO_NAMESPACE_USING
-
-CCL_NAMESPACE_END
-
-#endif /* __UTIL_ARGS_H__ */
+#endif /* __UTIL_OPENGL_H__ */
 

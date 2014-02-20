@@ -51,8 +51,9 @@ void ImageManager::set_osl_texture_system(void *texture_system)
 }
 
 static bool is_float_image(const string& filename)
-{
+{ return false;
 #if 0
+{
 	ImageInput *in = ImageInput::create(filename);
 	bool is_float = false;
 
@@ -84,12 +85,12 @@ static bool is_float_image(const string& filename)
 
 	return is_float;
 #endif
-	return false;
 }
 
 int ImageManager::add_image(const string& filename, bool& is_float)
-{
+{ return -1;
 #if 0
+{
 	Image *img;
 	size_t slot;
 
@@ -163,12 +164,12 @@ int ImageManager::add_image(const string& filename, bool& is_float)
 
 	return slot;
 #endif
-	return -1;
 }
 
 void ImageManager::remove_image(const string& filename)
 {
 #if 0
+{
 	size_t slot;
 
 	for(slot = 0; slot < images.size(); slot++) {
@@ -205,12 +206,14 @@ void ImageManager::remove_image(const string& filename)
 			}
 		}
 	}
-#endif
 }
 
+#endif
+}
 bool ImageManager::file_load_image(Image *img, device_vector<uchar4>& tex_img)
-{
+{ return false;
 #if 0
+{
 	if(img->filename == "")
 		return false;
 
@@ -270,12 +273,12 @@ bool ImageManager::file_load_image(Image *img, device_vector<uchar4>& tex_img)
 
 	return true;
 #endif
-	return false;
 }
 
 bool ImageManager::file_load_float_image(Image *img, device_vector<float4>& tex_img)
-{
+{ return false;
 #if 0
+{
 	if(img->filename == "")
 		return false;
 
@@ -335,7 +338,6 @@ bool ImageManager::file_load_float_image(Image *img, device_vector<float4>& tex_
 
 	return true;
 #endif
-	return false;
 }
 
 void ImageManager::device_load_image(Device *device, DeviceScene *dscene, int slot)

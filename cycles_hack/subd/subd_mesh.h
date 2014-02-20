@@ -81,7 +81,6 @@ protected:
 		int p0, p1;
 	};
 
-	typedef pair<Key, SubdEdge*> EdgeMapPair;
 	map<Key, SubdEdge *> edge_map;
 };
 

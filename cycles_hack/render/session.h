@@ -124,9 +124,7 @@ protected:
 		int samples;
 	} delayed_reset;
 
-public:
 	void run();
-protected:
 
 	void update_scene();
 	void update_status_time(bool show_pause = false, bool show_done = false);
@@ -135,9 +133,7 @@ protected:
 	void path_trace(Tile& tile);
 	void reset_(BufferParams& params, int samples);
 
-public:
-	void run_cpu(bool reset = true);
-protected:
+	void run_cpu();
 	bool draw_cpu(BufferParams& params);
 	void reset_cpu(BufferParams& params, int samples);
 

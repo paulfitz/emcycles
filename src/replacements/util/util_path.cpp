@@ -194,7 +194,7 @@ bool path_read_binary(const string& path, vector<uint8_t>& binary)
 	return true;
 }
 
-static bool path_read_text(const string& path, string& text)
+bool path_read_text(const string& path, string& text)
 {
 #if 0
 	vector<uint8_t> binary;

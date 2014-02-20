@@ -60,7 +60,7 @@ typedef struct SobolDirectionNumbers {
 	uint m[SOBOL_MAX_NUMBER];
 } SobolDirectionNumbers;
 
-static SobolDirectionNumbers SOBOL_NUMBERS[SOBOL_MAX_DIMENSIONS-1] = {
+static SobolDirectionNumbers SOBOL_NUMBERS[] = {
 {2, 1, 0, {1}},
 {3, 2, 1, {1, 3}},
 {4, 3, 1, {1, 3, 1}},
@@ -194,7 +194,9 @@ static SobolDirectionNumbers SOBOL_NUMBERS[SOBOL_MAX_DIMENSIONS-1] = {
 {132, 10, 266, {1, 3, 1, 9, 1, 29, 117, 21, 441, 259}},
 {133, 10, 274, {1, 3, 1, 13, 21, 39, 125, 211, 439, 723}},
 {134, 10, 283, {1, 1, 7, 3, 17, 63, 115, 89, 49, 773}},
-{135, 10, 289, {1, 3, 7, 13, 11, 33, 101, 107, 63, 73}},
+{135, 10, 289, {1, 3, 7, 13, 11, 33, 101, 107, 63, 73}}
+};
+/*
 {136, 10, 295, {1, 1, 5, 5, 13, 57, 63, 135, 437, 177}},
 {137, 10, 301, {1, 1, 3, 7, 27, 63, 93, 47, 417, 483}},
 {138, 10, 316, {1, 1, 3, 1, 23, 29, 1, 191, 49, 23}},
@@ -21263,6 +21265,15 @@ static SobolDirectionNumbers SOBOL_NUMBERS[SOBOL_MAX_DIMENSIONS-1] = {
 {21201, 18, 131059, {1, 1, 7, 11, 15, 7, 37, 239, 337, 245, 1557, 3681, 7357, 9639, 27367, 26869, 114603, 86317}}
 };
 
+*/
+#include <stdio.h>
+SobolDirectionNumbers *get_sobol_numbers(int x) {
+if (x>134) { printf("Oops I was bluffing about sobol, bluff called: %d (see %s)\n", x, __FILE__);
+exit(1);
+}
+return &SOBOL_NUMBERS[x];
+}
+
 void sobol_generate_direction_vectors(uint vectors[][SOBOL_BITS], int dimensions)
 {
 	assert(dimensions <= SOBOL_MAX_DIMENSIONS);
@@ -21276,7 +21287,7 @@ void sobol_generate_direction_vectors(uint vectors[][SOBOL_BITS], int dimensions
 		v[i] = 1 << (31-i); // all m's = 1
 
 	for(int dim = 1; dim < dimensions; dim++) {
-		SobolDirectionNumbers *numbers = &SOBOL_NUMBERS[dim-1];
+		SobolDirectionNumbers *numbers = get_sobol_numbers(dim-1);
 		uint s = numbers->s;
 		uint a = numbers->a;
 		uint *m = numbers->m;

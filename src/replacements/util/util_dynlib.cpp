@@ -20,21 +20,75 @@
 
 #include "util_dynlib.h"
 
+#ifdef _WIN32
+
+#include <Windows.h>
 
 CCL_NAMESPACE_BEGIN
 
+struct DynamicLibrary {
+	HMODULE module;
+};
+
 DynamicLibrary *dynamic_library_open(const char *name)
 {
-  return NULL;
+	HMODULE module = LoadLibrary(name);
+
+	if(!module)
+		return NULL;
+
+	DynamicLibrary *lib = new DynamicLibrary();
+	lib->module = module;
+
+	return lib;
 }
 
 void *dynamic_library_find(DynamicLibrary *lib, const char *name)
 {
+	return (void*)GetProcAddress(lib->module, name);
+}
+
+void dynamic_library_close(DynamicLibrary *lib)
+{
+	FreeLibrary(lib->module);
+	delete lib;
+}
+
+CCL_NAMESPACE_END
+
+#else
+
+#include <dlfcn.h>
+
+CCL_NAMESPACE_BEGIN
+
+struct DynamicLibrary {
+	void *module;
+};
+
+DynamicLibrary *dynamic_library_open(const char *name)
+{
+  void *module = NULL; //dlopen(name, RTLD_NOW);
+
+	if(!module)
+		return NULL;
+
+	DynamicLibrary *lib = new DynamicLibrary();
+	lib->module = module;
+
+	return lib;
+}
+
+void *dynamic_library_find(DynamicLibrary *lib, const char *name)
+{
+  //return dlsym(lib->module, name);
   return NULL;
 }
 
 void dynamic_library_close(DynamicLibrary *lib)
 {
+  //dlclose(lib->module);
+	delete lib;
 }
 
 CCL_NAMESPACE_END

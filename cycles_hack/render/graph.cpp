@@ -295,7 +295,7 @@ void ShaderGraph::copy_nodes(set<ShaderNode*>& nodes, map<ShaderNode*, ShaderNod
 void ShaderGraph::remove_proxy_nodes(vector<bool>& removed)
 {
 	foreach(ShaderNode *node, nodes) {
-		ProxyNode *proxy = (node->is_proxy())?((ProxyNode*)node):NULL;
+		ProxyNode *proxy = dynamic_cast<ProxyNode*>(node);
 		if (proxy) {
 			ShaderInput *input = proxy->inputs[0];
 			ShaderOutput *output = proxy->outputs[0];

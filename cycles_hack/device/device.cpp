@@ -119,13 +119,11 @@ void Device::pixels_free(device_memory& mem)
 }
 
 extern void draw_out(char *mem, int w, int h, int pix);
-
 void Device::draw_pixels(device_memory& rgba, int y, int w, int h, int dy, int width, int height, bool transparent)
 {
-  pixels_copy_from(rgba, y, w, h);
-  draw_out((char*)rgba.data_pointer,w,h,4);
-#if 0
 	pixels_copy_from(rgba, y, w, h);
+draw_out((char*)rgba.data_pointer,w,h,4);
+#if 0 //PFHIT
 
 	if(transparent) {
 		glEnable(GL_BLEND);

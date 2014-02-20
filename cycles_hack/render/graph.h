@@ -148,8 +148,6 @@ public:
 	ShaderNode(const char *name);
 	virtual ~ShaderNode();
 
-	virtual bool is_proxy() const { return false; }
-
 	ShaderInput *input(const char *name);
 	ShaderOutput *output(const char *name);
 

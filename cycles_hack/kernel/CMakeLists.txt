@@ -8,9 +8,9 @@ set(INC
 
 set(SRC
 	kernel.cpp
-#	kernel_optimized.cpp
-#	kernel.cl
-#	kernel.cu
+	kernel_optimized.cpp
+	kernel.cl
+	kernel.cu
 )
 
 set(SRC_HEADERS

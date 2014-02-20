@@ -301,6 +301,7 @@ bool DisplayBuffer::draw_ready()
 void DisplayBuffer::write(Device *device, const string& filename)
 {
 #if 0
+{
 	int w = draw_width;
 	int h = draw_height;
 

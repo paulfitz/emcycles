@@ -30,7 +30,7 @@ set(SRC
 	scene.cpp
 	session.cpp
 	shader.cpp
-	# sobol.cpp # Way too big for javascript
+	sobol.cpp
 	svm.cpp
 	tile.cpp
 )

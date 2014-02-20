@@ -20,15 +20,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-//#include "util_opengl.h"
+#include "util_opengl.h"
 #include "util_time.h"
 #include "util_view.h"
 
-//#ifdef __APPLE__
-//#include <GLUT/glut.h>
-//#else
-//#include <GL/glut.h>
-//#endif
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 CCL_NAMESPACE_BEGIN
 
@@ -51,20 +51,16 @@ struct View {
 
 static void view_display_text(int x, int y, const char *text)
 {
-  printf(">>> %s\n", text);
-#if 0
 	const char *c;
 
 	glRasterPos3f(x, y, 0);
 
 	for(c=text; *c != '\0'; c++)
 		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, *c);
-#endif
 }
 
 void view_display_info(const char *info)
 {
-#if 0
 	const int height = 20;
 
 	glEnable(GL_BLEND);
@@ -78,7 +74,6 @@ void view_display_info(const char *info)
 	view_display_text(10, 7 + V.height - height, info);
 
 	glColor3f(1.0f, 1.0f, 1.0f);
-#endif
 }
 
 static void view_display()
@@ -90,7 +85,6 @@ static void view_display()
 		V.first_display = false;
 	}
 
-#if 0
 	glClearColor(0.05f, 0.05f, 0.05f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -107,7 +101,6 @@ static void view_display()
 		V.display();
 
 	glutSwapBuffers();
-#endif
 }
 
 static void view_reshape(int width, int height)
@@ -118,7 +111,6 @@ static void view_reshape(int width, int height)
 	V.width = width;
 	V.height = height;
 
-#if 0
 	glViewport(0, 0, width, height);
 
 	glMatrixMode(GL_PROJECTION);
@@ -126,7 +118,6 @@ static void view_reshape(int width, int height)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-#endif
 
 	if(V.resize)
 		V.resize(width, height);
@@ -149,10 +140,10 @@ void view_idle()
 {
 	if(V.redraw) {
 		V.redraw = false;
-		//glutPostRedisplay();
+		glutPostRedisplay();
 	}
 
-	//time_sleep(0.1f);
+	time_sleep(0.1f);
 }
 
 void view_main_loop(const char *title, int width, int height,
@@ -175,7 +166,6 @@ void view_main_loop(const char *title, int width, int height,
 	V.display = display;
 	V.keyboard = keyboard;
 
-#if 0
 	glutInit(&argc, &argv);
 	glutInitWindowSize(width, height);
 	glutInitWindowPosition(0, 0);
@@ -185,18 +175,15 @@ void view_main_loop(const char *title, int width, int height,
 #ifndef __APPLE__
 	glewInit();
 #endif
-#endif
 
 	view_reshape(width, height);
 
-#if 0
 	glutDisplayFunc(view_display);
 	glutIdleFunc(view_idle);
 	glutReshapeFunc(view_reshape);
 	glutKeyboardFunc(view_keyboard);
 
 	glutMainLoop();
-#endif
 }
 
 void view_redraw()

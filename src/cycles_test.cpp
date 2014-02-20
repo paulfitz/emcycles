@@ -32,6 +32,7 @@
 #include "util_string.h"
 #include "util_time.h"
 #include "util_view.h"
+#include "util_param.h"
 
 #include "cycles_xml.h"
 
@@ -43,16 +44,23 @@
 #include <SDL/SDL.h>
 #endif
 
-
 CCL_NAMESPACE_BEGIN
 
+//namespace OpenImageIO {
+//namespace v1_1 {
+    //TypeDesc::TypeDesc(const char *name) {
+    //}
 
-const TypeDesc TypeDesc::TypeColor("color");
-const TypeDesc TypeDesc::TypeFloat("float");
-const TypeDesc TypeDesc::TypePoint("point");
-const TypeDesc TypeDesc::TypeNormal("normal");
-const TypeDesc TypeDesc::TypeVector("vector");
+    //void ParamValue::clear_value() {
+    //}
 
+    const TypeDesc TypeDesc::TypeColor("color");
+    const TypeDesc TypeDesc::TypeFloat("float");
+    const TypeDesc TypeDesc::TypePoint("point");
+    const TypeDesc TypeDesc::TypeNormal("normal");
+    const TypeDesc TypeDesc::TypeVector("vector");
+//  }
+//}
 
 struct Options {
 	Session *session;
@@ -84,8 +92,8 @@ static void session_print_status()
 		status += ": " + substatus;
 
 	/* print status */
-	//status = string_printf("Sample %d   %s", sample, status.c_str());
-	status = "Sample";
+	status = string_printf("Sample %d   %s", sample, status.c_str());
+	//status = "Sample";
 	session_print(status);
 }
 
@@ -110,9 +118,10 @@ static void session_init()
 	
 	if(options.session_params.background && !options.quiet)
 		options.session->progress.set_update_callback(function_bind(&session_print_status));
-	else
-		options.session->progress.set_update_callback(function_bind(&view_redraw));
+	//else
+	  //options.session->progress.set_update_callback(function_bind(&view_redraw));
 
+	printf("About to start\n");
 	options.session->start();
 	printf("session_init.\n");
 
@@ -127,7 +136,7 @@ static void session_more() {
 static void scene_init(int width, int height)
 {
   printf("scene_init.\n");
-	options.scene = new Scene(options.scene_params);
+  options.scene = new Scene(options.scene_params); //, options.session_params.device);
 	xml_read_file(options.scene, options.filepath.c_str());
 	
 	if (width == 0 || height == 0) {
@@ -396,20 +405,25 @@ int main(int argc, const char **argv)
 
 	options_parse(argc, argv);
 
+	options.session_params.background = true;
 	if(options.session_params.background) {
 		session_init();
 		options.session->wait();
 		session_exit();
 	}
 	else {
+	  printf("HELLO!\n");
 		string title = "Cycles: " + path_filename(options.filepath);
 
 		/* init/exit are callback so they run while GL is initialized */
 		//view_main_loop(title.c_str(), options.width, options.height,
 		//	       session_init, 
 		//	       session_exit, resize, display, keyboard);
+		printf("initing\n");
 		session_init();
-		options.session->run();
+		printf("inited\n");
+		//options.session->run();
+		options.session->wait();
 		if (options.session->draw(session_buffer_params())) {
 		  printf("Got image\n");
 		}

@@ -22,15 +22,22 @@
 //#include <boost/thread.hpp>
 //#include <pthread.h>
 #include <queue>
+#include <assert.h>
 
 #include "util_function.h"
 
 CCL_NAMESPACE_BEGIN
 
 class thread {
+public:
+  thread(std::function<void()> cmd) { cmd(); }
+  void join() { }
 };
 
 class thread_mutex {
+public:
+  void lock() {}
+  void unlock() {}
 };
 
 class thread_scoped_lock {
@@ -39,6 +46,7 @@ public:
 
   thread_scoped_lock(thread_mutex& mutex) {}
 
+  void lock() {}
   void unlock() {}
 };
 

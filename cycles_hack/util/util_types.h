@@ -36,13 +36,11 @@
 #define __shared
 #define __constant
 
-//#ifdef __GNUC__
-//#define __device_inline static inline __attribute__((always_inline))
-//#else
-//#define __device_inline static __forceinline
-//#endif
-
-#define __device_inline inline
+#ifdef __GNUC__
+#define __device_inline static inline __attribute__((always_inline))
+#else
+#define __device_inline static __forceinline
+#endif
 
 #endif
 

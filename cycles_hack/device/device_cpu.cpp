@@ -40,7 +40,7 @@ CCL_NAMESPACE_BEGIN
 class CPUDevice : public Device
 {
 public:
-	//vector<thread*> threads;
+	vector<thread*> threads;
 	ThreadQueue<DeviceTask> tasks;
 	KernelGlobals *kg;
 	
@@ -54,20 +54,20 @@ public:
 		if(threads_num == 0)
 			threads_num = system_cpu_thread_count();
 
-		//threads.resize(threads_num);
+		threads.resize(threads_num);
 
-		//for(size_t i = 0; i < threads.size(); i++)
-			//threads[i] = new thread(function_bind(&CPUDevice::thread_run, this, i));
+		for(size_t i = 0; i < threads.size(); i++)
+			threads[i] = new thread(function_bind(&CPUDevice::thread_run, this, i));
 	}
 
 	~CPUDevice()
 	{
 		tasks.stop();
 
-		//foreach(thread *t, threads) {
-			//t->join();
-			//delete t;
-		//}
+		foreach(thread *t, threads) {
+			t->join();
+			delete t;
+		}
 
 		kernel_globals_free(kg);
 	}
@@ -239,12 +239,11 @@ public:
 	{
 		/* split task into smaller ones, more than number of threads for uneven
 		   workloads where some parts of the image render slower than others */
-		task.split(tasks, 100);
+		task.split(tasks, threads.size()*10);
 	}
 
 	void task_wait()
 	{
-		thread_run(0);
 		tasks.wait_done();
 	}
 

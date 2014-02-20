@@ -92,7 +92,7 @@ Session::~Session()
 
 void Session::start()
 {
-	//session_thread = new thread(function_bind(&Session::run, this));
+	session_thread = new thread(function_bind(&Session::run, this));
 }
 
 bool Session::ready_to_reset()
@@ -302,9 +302,9 @@ bool Session::draw_cpu(BufferParams& buffer_params)
 	return false;
 }
 
-void Session::run_cpu(bool reset)
+void Session::run_cpu()
 {
-	if (reset) {
+	{
 		/* reset once to start */
 		thread_scoped_lock reset_lock(delayed_reset.mutex);
 		thread_scoped_lock buffers_lock(buffers->mutex);
@@ -314,8 +314,7 @@ void Session::run_cpu(bool reset)
 		delayed_reset.do_reset = false;
 	}
 
-	//while(!progress.get_cancel()) {
-	for (int i=0; i<1; i++) {
+	while(!progress.get_cancel()) {
 		/* advance to next tile */
 		bool no_tiles = !tile_manager.next();
 		bool need_tonemap = false;
@@ -517,8 +516,8 @@ void Session::set_pause(bool pause_)
 
 void Session::wait()
 {
-	//session_thread->join();
-	//delete session_thread;
+	session_thread->join();
+	delete session_thread;
 
 	session_thread = NULL;
 }

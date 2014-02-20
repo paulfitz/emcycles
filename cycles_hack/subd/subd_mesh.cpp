@@ -47,9 +47,11 @@ SubdMesh::SubdMesh()
 
 SubdMesh::~SubdMesh()
 {
+	//pair<Key, SubdEdge*> em;
+
 	foreach(SubdVert *vertex, verts)
 		delete vertex;
-	foreach(const EdgeMapPair& em, edge_map)
+	foreach3(pair < Key, SubdEdge* > em, edge_map)
 		delete em.second;
 	foreach(SubdFace *face, faces)
 		delete face;
