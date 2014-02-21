@@ -245,6 +245,7 @@ public:
 	void task_wait()
 	{
 		tasks.wait_done();
+thread_run(0);
 	}
 
 	void task_cancel()

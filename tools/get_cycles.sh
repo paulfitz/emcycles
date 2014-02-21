@@ -76,6 +76,9 @@ echo "dropping some gl stuff"
 grep -v PFHIT device.cpp > /tmp/device.cpp
 awk '/pixels_copy_from\(rgba/{print;print "draw_out((char*)rgba.data_pointer,w,h,4);";print "#if 0 //PFHIT";next}1'  /tmp/device.cpp | awk '/::draw_pixels/{print "extern void draw_out(char *mem, int w, int h, int pix);"}1' | awk '/glDisable/{print;print "#endif";next}1' > device.cpp
 
+echo "actually process tasks"
+sed -i "s|\(tasks.wait_done();\)|\1\nthread_run(0);|" device_cpu.cpp
+
 cd $BASE/render || exit 1
 echo "dropping some oiio stuff"
 
@@ -100,3 +103,4 @@ echo "tweaking enormous sobol array"
 cp sobol.cpp /tmp
 cat /tmp/sobol.cpp | sed "s|SOBOL_NUMBERS\[SOBOL_MAX_DIMENSIONS-1\]|SOBOL_NUMBERS[]|" | sed "s|\({135,.*}\),|\1\n};\n/\*|" | sed "s|\&SOBOL_NUMBERS\[dim-1\]|get_sobol_numbers(dim-1)|" | sed 's|\(void sobol_generate\)|*\/\n#include <stdio.h>\nSobolDirectionNumbers *get_sobol_numbers(int x) {\nif (x>134) { printf("Oops I was bluffing about sobol, bluff called: %d (see %s)\\n", x, __FILE__);\nexit(1);\n}\nreturn \&SOBOL_NUMBERS[x];\n}\n\n\1|' > sobol.cpp
 
+sed -i "s|protected:|public:|" session.h

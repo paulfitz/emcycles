@@ -357,13 +357,14 @@ void draw_out(char *mem, int w, int h, int pix) {
       printf("%d ", (unsigned char)src[0]);
       printf("%d ", (unsigned char)src[1]);
       printf("%d ", (unsigned char)src[2]);
+      printf("(%d) ", (unsigned char)src[3]);
       src += 4;
     }
     printf("\n");
   }
   printf("999 \n");
 
-#if 0
+#ifndef EMCYCLES_JS
   // can't do this from javascript!
 	static int ct = 0;
 	char buf[1000];
@@ -406,9 +407,14 @@ int main(int argc, const char **argv)
 	options_parse(argc, argv);
 
 	options.session_params.background = true;
+	options.session_params.threads = 1;
 	if(options.session_params.background) {
 		session_init();
+		options.session->tonemap();
 		options.session->wait();
+		if (options.session->draw(session_buffer_params())) {
+		  printf("Got image\n");
+		}
 		session_exit();
 	}
 	else {

@@ -116,7 +116,7 @@ public:
 	void set_samples(int samples);
 	void set_pause(bool pause);
 
-protected:
+public:
 	struct DelayedReset {
 		thread_mutex mutex;
 		bool do_reset;

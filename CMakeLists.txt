@@ -11,6 +11,10 @@ add_definitions(-std=c++11)
 
 if (CMAKE_TOOLCHAIN_FILE) # lame way of detecting emscripten
   add_definitions(-Wno-warn-absolute-paths)
+  add_definitions(-DEMCYCLE_JS=1)
+  add_definitions(-O2)
+else ()
+  add_definitions(-DEMCYCLE_NORMAL=1)
 endif ()
 
 # Replacement functions

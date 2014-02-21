@@ -135,6 +135,7 @@ public:
 	/* wait until all tasks are done */
 	void wait_done()
 	{
+	  printf("WAIT_DONE!!!\n");
 	}
 
 	/* stop all worker threads */
